@@ -19,7 +19,7 @@ public class SpawnPoint : MonoBehaviour
         var directionX = Random.Range(MinDirectionValue, MaxDirectionValue);
         var directionY = Random.Range(MinDirectionValue, MaxDirectionValue);
 
-        var enemyMoveDirection = new Vector3(directionX, DirectionValueY, directionY);
+        var enemyMoveDirection = new Vector3(directionX, DirectionValueY, directionY).normalized;
 
         enemy.Initialize(enemyPosition, enemyMoveDirection);
     }
