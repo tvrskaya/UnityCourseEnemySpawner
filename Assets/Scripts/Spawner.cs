@@ -1,21 +1,27 @@
+using System.Linq;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [ContextMenuItem("Yuuuriii", nameof(Spawn))]
+    [SerializeField] private Timer _timer;
+    [SerializeField] private SpawnPoint[] _spawners;
 
-    private readonly float _maxRotation = 360f;
-    private readonly float _minRotation = 0f;
-
-    [SerializeField] private EnemyPool _enemyPool;
-
-    public void Spawn()
+    private void OnEnable()
     {
-        var enemy = _enemyPool.Get();
+        _timer.TimerExhausted += ProcessTimerExhausted;
+    }
 
-        enemy.transform.position = new Vector3(transform.position.x, transform.position.y * 2 + enemy.transform.localScale.y, transform.position.z);
+    private void OnDisable()
+    {
+        _timer.TimerExhausted -= ProcessTimerExhausted;
+    }
 
-        var rotation = Random.Range(_minRotation, _maxRotation);
-        enemy.transform.rotation = Quaternion.Euler(0, rotation, 0);
+    private void ProcessTimerExhausted()
+    {
+        if (_spawners.Length > 0)
+        {   
+            var timerIndex = Random.Range(0, _spawners.Length);
+            _spawners[timerIndex].Spawn();
+        }
     }
 }

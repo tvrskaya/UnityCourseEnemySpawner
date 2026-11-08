@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public event Action TimerExhausted;
-
     [SerializeField, Min(0f)] private float _time = 2f;
 
     private Coroutine _coroutine;
+    
+    public event Action TimerExhausted;
 
     private void OnEnable()
     {

@@ -13,7 +13,7 @@ public class EnemyPool : MonoBehaviour
     {
         _enemyPool = new ObjectPool<Enemy>(
             createFunc: () => Object.Instantiate(_enemyPrefab),
-            actionOnGet: (Enemy enemy) => ActionOnGet(enemy.gameObject),
+            actionOnGet: (Enemy enemy) => ProcessPoolOnGet(enemy),
             actionOnRelease: (Enemy enemy) => enemy.gameObject.SetActive(false),
             actionOnDestroy: (Enemy enemy) => Object.Destroy(enemy.gameObject),
             collectionCheck: true,
@@ -27,12 +27,14 @@ public class EnemyPool : MonoBehaviour
         return _enemyPool.Get();
     }
 
-    private void ActionOnGet(GameObject obj)
+    private void ProcessPoolOnGet(Enemy enemy)
     {
-        obj.transform.position = Vector3.zero;
-        obj.transform.rotation = Quaternion.identity;
+        var enemyGameObject = enemy.gameObject;
 
-        obj.SetActive(true);
+        enemyGameObject.transform.position = Vector3.zero;
+        enemyGameObject.transform.rotation = Quaternion.identity;
+
+        enemyGameObject.SetActive(true);
     }
 
 }
