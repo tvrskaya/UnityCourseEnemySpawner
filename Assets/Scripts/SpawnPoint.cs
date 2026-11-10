@@ -5,9 +5,10 @@ public class SpawnPoint : MonoBehaviour
     private readonly float MaxDirectionValue = 1f;
     private readonly float MinDirectionValue = -1f;
     private readonly int DirectionValueY = 0;
-    private readonly int ModelPositionScale = 2; 
+    private readonly int ModelPositionScale = 2;
 
     [SerializeField] private EnemyPool _enemyPool;
+    [SerializeField] private EnemyTarget _enemyTarget;
 
     public void Spawn()
     {
@@ -21,6 +22,6 @@ public class SpawnPoint : MonoBehaviour
 
         var enemyMoveDirection = new Vector3(directionX, DirectionValueY, directionY).normalized;
 
-        enemy.Initialize(enemyPosition, enemyMoveDirection);
+        enemy.Initialize(enemyPosition, _enemyTarget.transform);
     }
 }
